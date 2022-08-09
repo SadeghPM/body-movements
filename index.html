@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>حرکات در بدنسازی</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://unpkg.com/tabulator-tables@5.2.3/dist/css/tabulator_bulma.min.css" rel="stylesheet">
+    <script type="text/javascript" src="https://unpkg.com/tabulator-tables@5.2.3/dist/js/tabulator.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@33.003/misc/Farsi-Digits/Vazirmatn-FD-font-face.css" rel="stylesheet"
+          type="text/css"/>
+    <style>
+        body ,input,button,select{
+            font-family: Vazirmatn FD, sans-serif;
+        }
+        .tabulator-paginator{
+            text-align: left !important;
+        }
+    </style>
+</head>
+<body dir="rtl">
+<div id="movements_table"></div>
+
+<script>
+    var table = new Tabulator("#movements_table", {
+        ajaxURL: "/data.json",
+        layout: "fitDataStretch",
+        paginationSize: 3,
+        paginationSizeSelector:true,
+        pagination: true,
+        paginationCounter:"rows",
+        textDirection: "rtl",
+        responsiveLayout:"collapse",
+        autoResize:false,
+        height: "100vh",
+        columns: [
+            {
+                title: "نام حرکت", field: "name", width: 300, headerFilter: "input",
+            },
+            {
+                title: "توضیح", field: "how", formatter: (c) => c.getValue().join('<br/>')
+            },
+            {
+                title: "ویدیو",
+                field: "video",
+                resizable: true,
+                formatter: (cell) => `<video poster="${cell.getData('thumbnail')['thumbnail']}" src='${cell.getValue()}' loop muted controls preload="auto" style="width: 300px;height: 300px">`,
+                variableHeight: true
+            }
+        ],
+        locale:'fa-ir',
+        langs: {
+            "fa-ir": {
+                "columns": {
+                    "name": "نام", //replace the title of column name with the value "Name"
+                },
+                "data": {
+                    "loading": "در حال بارگزاری", //data loader text
+                    "error": "خطا", //data error text
+                },
+                "groups": { //copy for the auto generated item count in group header
+                    "item": "حرکت", //the singular  for item
+                    "items": "حرکات", //the plural for items
+                },
+                "pagination": {
+                    "page_size": "تعداد در صفحه", //label for the page size select element
+                    "page_title": "نمایش صفحه",//tooltip text for the numeric page button, appears in front of the page number (eg. "Show Page" will result in a tool tip of "Show Page 1" on the page 1 button)
+                    "first": "ابتدا", //text for the first page button
+                    "first_title": "اولین صفحه", //tooltip text for the first page button
+                    "last": "آخرین",
+                    "last_title": "آخرین صفحه",
+                    "prev": "قبلی",
+                    "prev_title": "صفحه قبلی",
+                    "next": "بعدی",
+                    "next_title": "صفحه‌ی بعدی",
+                    "all": "همه",
+                    "counter": {
+                        "showing": "نمایش",
+                        "of": "از",
+                        "rows": "حرکت",
+                        "pages": "صفحه‌ی",
+                    }
+                },
+                "headerFilters": {
+                    "default": "filter column...", //default header filter placeholder text
+                    "columns": {
+                        "name": "جستجوی عنوان...", //replace default header filter text for column name
+                    }
+                }
+            }
+        }
+    });
+
+</script>
+</body>
+</html>
