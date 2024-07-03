@@ -3,7 +3,7 @@ require "vendor/autoload.php";
 $movements = [];
 
 
-foreach (range(1, 40) as $page) {
+foreach (range(1, 85) as $page) {
     $crawler = new \Symfony\Component\DomCrawler\Crawler(
         file_get_contents("https://fitamin.ir/mag/movement/page/$page")
     );
