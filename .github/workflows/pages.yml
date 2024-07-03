@@ -43,6 +43,17 @@ jobs:
       - name: Run crawler.php
         run: php crawler.php
 
+      - name: Configure Git
+        run: |
+            git config --global user.name 'github-actions[bot]'
+            git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          
+      - name: Commit and Push changes
+        run: |
+            git add .
+            git commit -m "Update data from crawler"
+            git push
+
       - name: Setup Pages
         uses: actions/configure-pages@v1
       - name: Upload artifact
