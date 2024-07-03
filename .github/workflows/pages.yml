@@ -30,13 +30,28 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.1'
+      - name: Install Composer
+        run: composer self-update --2
+
+      - name: Install Dependencies
+        run: composer update
+
+      - name: Run crawler.php
+        run: php crawler.php
+
       - name: Setup Pages
         uses: actions/configure-pages@v1
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v1
         with:
           # Upload entire repository
-          path: '.'
+          path: |
+            !vendor/
+            **/*
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@main
