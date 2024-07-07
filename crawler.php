@@ -3,7 +3,7 @@ require "vendor/autoload.php";
 $movements = [];
 
 
-foreach (range(1, 85) as $page) {
+foreach (range(1, 40) as $page) {
     $crawler = new \Symfony\Component\DomCrawler\Crawler(
         file_get_contents("https://fitamin.ir/mag/movement/page/$page")
     );
@@ -64,7 +64,9 @@ function saveThumbnail($card, mixed $name): void
     $image_url = $card
         ->filter("a>div:nth-child(1)>img")
         ->attr("data-src");
-
+    if (empty($image_url) or empty($name)) {
+        return;
+    }
     file_put_contents(
         __DIR__ . "/asset/thumbnails/$name-300x300.jpg",
         file_get_contents($image_url)
