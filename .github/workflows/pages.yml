@@ -1,27 +1,16 @@
-# Simple workflow for deploying static content to GitHub Pages
 name: Deploy static content to Pages
-
 on:
-  # Runs on pushes targeting the default branch
   push:
     branches: ["main"]
-
-  # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
-
-# Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
 permissions:
   contents: write
   pages: write
   id-token: write
-
-# Allow one concurrent deployment
 concurrency:
   group: "pages"
   cancel-in-progress: true
-
 jobs:
-  # Single deploy job since we're just deploying
   deploy:
     environment:
       name: github-pages
@@ -35,6 +24,7 @@ jobs:
         uses: shivammathur/setup-php@v2
         with:
           php-version: '8.1'
+
       - name: Install Composer
         run: composer self-update --2
 
@@ -54,11 +44,12 @@ jobs:
 
       - name: Setup Pages
         uses: actions/configure-pages@v1
+
       - name: Upload artifact
-        uses: actions/upload-pages-artifact@v1
+        uses: actions/upload-artifact@v2
         with:
-          # Upload entire repository
+          name: github-pages
           path: .
+
       - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@main
+        uses: actions/deploy-pages@v4
