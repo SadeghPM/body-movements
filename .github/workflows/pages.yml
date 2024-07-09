@@ -43,12 +43,11 @@ jobs:
           git push
 
       - name: Setup Pages
-        uses: actions/configure-pages@v1
+        uses: actions/configure-pages@v4
 
       - name: Upload artifact
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
-          name: github-pages
           path: .
 
       - name: Deploy to GitHub Pages
