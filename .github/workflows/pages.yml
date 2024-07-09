@@ -29,14 +29,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
-        with:
-          persist-credentials: false
+        uses: actions/checkout@v2
 
-      - name: Set up Git
-        run: |
-          git config --global user.name 'github-actions[bot]'
-          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
       - name: Set up PHP
         uses: shivammathur/setup-php@v2
         with:
@@ -51,12 +45,12 @@ jobs:
         run: php crawler.php
 
       - name: Commit and Push changes
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-            git add .
-            git commit -m "Update data from crawler"
-            git push
+          git diff
+          git config --global user.email "action@github.com"
+          git config --global user.name "GitHub Action"
+          git commit -am "Update Videos" || exit 0
+          git push
 
       - name: Setup Pages
         uses: actions/configure-pages@v1
