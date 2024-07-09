@@ -36,9 +36,9 @@ jobs:
 
       - name: Commit and Push changes
         run: |
-          git diff
           git config --global user.email "action@github.com"
           git config --global user.name "GitHub Action"
+          git add .
           git commit -am "Update Videos" || exit 0
           git push
 
